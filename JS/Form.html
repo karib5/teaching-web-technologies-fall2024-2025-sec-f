@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Person Profile</title>
+
+    <style>
+        .profile-table { border-collapse: collapse; width: 720px; border: 3px solid #666; }
+        .profile-table th { font-size: 32px; padding: 18px; text-align: center; }
+        .label { width: 180px; font-size: 18px; }
+        input[type="text"], select { height: 32px; font-size: 16px; }
+        .degree-checkboxes input { margin-right: 8px; }
+        .btn { padding: 8px 16px; font-size: 14px; }
+        p.error { color: red; margin: 4px 0 0 0; font-size: 14px; }
+    </style>
+</head>
+
+<body style="font-family: Arial, sans-serif; display:flex; justify-content:center; padding:20px;">
+
+<form id="profileForm">
+
+<table class="profile-table">
+
+<tr><th colspan="3">PERSON PROFILE</th></tr>
+
+<tr>
+    <td class="label">Name</td>
+    <td colspan="2">
+        <input type="text" id="name" style="width:420px;">
+        <p id="err_name" class="error"></p>
+    </td>
+</tr>
+
+<tr>
+    <td class="label">Email</td>
+    <td colspan="2">
+        <input type="text" id="email" style="width:420px;">
+        <p id="err_email" class="error"></p>
+    </td>
+</tr>
+
+<tr>
+    <td class="label">Gender</td>
+    <td colspan="2">
+        <label><input type="radio" name="gender" value="Male"> Male</label>
+        <label style="margin-left:18px;"><input type="radio" name="gender" value="Female"> Female</label>
+        <label style="margin-left:18px;"><input type="radio" name="gender" value="Other"> Other</label>
+        <p id="err_gender" class="error"></p>
+    </td>
+</tr>
+
+<tr>
+    <td class="label">Date of Birth</td>
+    <td colspan="2">
+        <div style="display:flex; gap:10px; align-items:center;">
+            <input type="text" name="dd" maxlength="2" placeholder="dd" style="width:70px; text-align:center;">
+            <span>/</span>
+            <input type="text" name="mm" maxlength="2" placeholder="mm" style="width:70px; text-align:center;">
+            <span>/</span>
+            <input type="text" name="yyyy" maxlength="4" placeholder="yyyy" style="width:100px; text-align:center;">
+            <span style="margin-left:8px; font-style:italic;">(dd/mm/yyyy)</span>
+        </div>
+        <p id="err_dob" class="error"></p>
+    </td>
+</tr>
+
+<tr>
+    <td class="label">Blood Group</td>
+    <td colspan="2">
+        <select id="blood" style="width:120px;">
+            <option value="">-- Select --</option>
+            <option>A+</option>
+            <option>A-</option>
+            <option>B+</option>
+            <option>B-</option>
+            <option>O+</option>
+            <option>O-</option>
+            <option>AB+</option>
+            <option>AB-</option>
+        </select>
+        <p id="err_blood" class="error"></p>
+    </td>
+</tr>
+
+<tr>
+    <td class="label">Degree</td>
+    <td colspan="2" class="degree-checkboxes">
+        <label><input type="checkbox" name="degree" value="SSC"> SSC</label>
+        <label style="margin-left:14px;"><input type="checkbox" name="degree" value="HSC"> HSC</label>
+        <label style="margin-left:14px;"><input type="checkbox" name="degree" value="BSc"> BSc.</label>
+        <label style="margin-left:14px;"><input type="checkbox" name="degree" value="MSc"> MSc.</label>
+        <p id="err_degree" class="error"></p>
+    </td>
+</tr>
+
+<tr>
+    <td class="label">Photo</td>
+    <td colspan="2">
+        <input type="file" id="photo">
+        <p id="err_photo" class="error"></p>
+    </td>
+</tr>
+
+<tr>
+    <td colspan="3" style="border:none; text-align:right; padding:12px;">
+        <input type="reset" class="btn" value="Reset">
+        <input type="submit" class="btn" value="Submit">
+    </td>
+</tr>
+
+</table>
+</form>
+
+<script>
+function validateForm() {
+    let ok = true;
+
+    function setError(id, msg) {
+        document.getElementById(id).innerHTML = msg;
+    }
+    function clearError(id) {
+        document.getElementById(id).innerHTML = '';
+    }
+
+    clearError('err_name');
+    if (document.getElementById('name').value.trim() === '') {
+        setError('err_name','Name cannot be empty'); ok = false;
+    }
+
+    clearError('err_email');
+    if (document.getElementById('email').value.trim() === '') {
+        setError('err_email','Email cannot be empty'); ok = false;
+    }
+
+    clearError('err_gender');
+    if (!document.querySelector('input[name="gender"]:checked')) {
+        setError('err_gender','Select gender'); ok = false;
+    }
+
+    clearError('err_dob');
+    let dd = document.querySelector('input[name="dd"]').value.trim();
+    let mm = document.querySelector('input[name="mm"]').value.trim();
+    let yyyy = document.querySelector('input[name="yyyy"]').value.trim();
+    if (dd === '' || mm === '' || yyyy === '') {
+        setError('err_dob','Date fields cannot be empty'); ok = false;
+    }
+
+    clearError('err_blood');
+    if (document.getElementById('blood').value === '') {
+        setError('err_blood','Select blood group'); ok = false;
+    }
+
+    clearError('err_degree');
+    if (document.querySelectorAll('input[name="degree"]:checked').length === 0) {
+        setError('err_degree','Select at least one degree'); ok = false;
+    }
+
+    clearError('err_photo');
+    if (document.getElementById('photo').value === '') {
+        setError('err_photo','Upload a photo'); ok = false;
+    }
+
+    return ok;
+}
+
+document.getElementById('profileForm').onsubmit = validateForm;
+</script>
+
+</body>
+</html>
