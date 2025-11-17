@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <style>
+        .calc-table { border-collapse: collapse; background:#8f8d8d; border-radius:14px; }
+        #display { width:100%; height:60px; font-size:28px; text-align:right; padding:8px; border:none; border-radius:10px; margin-bottom:6px; }
+        button { width:70px; height:60px; font-size:22px; }
+
+        .num { background:#444; color:white; }
+        .op  { background:#ff9800; color:white; }
+        .clear { background:#e91e63; color:white; }
+        .equal { background:#4caf50; color:white; width:100%; }
+        .del { background:#c0392b; color:white; }
+    </style>
+</head>
+
+<body style="display:flex; justify-content:center; padding:20px;">
+
+<form id="calcForm">
+
+<table class="calc-table" style="padding:20px;">
+
+<tr>
+    <td colspan="4">
+        <input type="text" id="display" disabled>
+    </td>
+</tr>
+
+<tr>
+    <td><button class="clear" onclick="clearDisplay(); return false;">C</button></td>
+    <td><button class="del" onclick="deleteOne(); return false;">DEL</button></td>
+    <td><button class="op" onclick="addInput('/'); return false;">/</button></td>
+    <td><button class="op" onclick="addInput('*'); return false;">*</button></td>
+</tr>
+
+<tr>
+    <td><button class="num" onclick="addInput('7'); return false;">7</button></td>
+    <td><button class="num" onclick="addInput('8'); return false;">8</button></td>
+    <td><button class="num" onclick="addInput('9'); return false;">9</button></td>
+    <td><button class="op" onclick="addInput('-'); return false;">-</button></td>
+</tr>
+
+<tr>
+    <td><button class="num" onclick="addInput('4'); return false;">4</button></td>
+    <td><button class="num" onclick="addInput('5'); return false;">5</button></td>
+    <td><button class="num" onclick="addInput('6'); return false;">6</button></td>
+    <td><button class="op" onclick="addInput('+'); return false;">+</button></td>
+</tr>
+
+<tr>
+    <td><button class="num" onclick="addInput('1'); return false;">1</button></td>
+    <td><button class="num" onclick="addInput('2'); return false;">2</button></td>
+    <td><button class="num" onclick="addInput('3'); return false;">3</button></td>
+    <td><button class="num" onclick="addInput('0'); return false;">0</button></td>
+</tr>
+
+<tr>
+    <td><button class="num" onclick="addInput('.'); return false;">.</button></td>
+    <td colspan="3">
+        <button class="equal" onclick="solveNow(); return false;">=</button>
+    </td>
+</tr>
+
+</table>
+
+</form>
+
+</body>
+</html>
