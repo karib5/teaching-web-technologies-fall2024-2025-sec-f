@@ -58,7 +58,7 @@
 <tr>
     <td><button class="num" onclick="addInput('.'); return false;">.</button></td>
     <td colspan="3">
-        <button class="equal" onclick="solveNow(); return false;">=</button>
+        <button class="equal" onclick="equal(); return false;">=</button>
     </td>
 </tr>
 
@@ -81,5 +81,14 @@ function deleteOne() {
     document.getElementById('display').value = box.slice(0, -1);
 }
 
+function equal() {
+    let exp = document.getElementById('display').value;
+    try {
+        let result = eval(exp);
+        document.getElementById('display').value = result;
+    } catch (e) {
+        alert('Invalid');
+    }
+}
 </script>
 </html>
