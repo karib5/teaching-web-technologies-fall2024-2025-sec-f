@@ -67,4 +67,19 @@
 </form>
 
 </body>
+<script>
+function addInput(v) {
+    document.getElementById('display').value += v;
+}
+
+function clearDisplay() {
+    document.getElementById('display').value = '';
+}
+
+function deleteOne() {
+    let box = document.getElementById('display').value;
+    document.getElementById('display').value = box.slice(0, -1);
+}
+
+</script>
 </html>
