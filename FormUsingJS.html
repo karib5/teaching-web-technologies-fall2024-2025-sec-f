@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        .generated-fields {
+            margin-top: 10px;
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <label>Name:</label>
+        <input type="text" name="AField" id="AField">
+        <span id="nameError" class="error"></span>
+        
+        <label>Select Type:</label>
+        <select id="inputType" name="inputType">
+            <option value="text">Text</option>
+            <option value="password">Password</option>
+            <option value="email">Email</option>
+        </select>
+        <span id="typeError" class="error"></span>
+        
+        <button id="addButton">Add</button>
+    </div>
+
+    <div id="fieldsContainer" class="generated-fields"></div>
+    
+    <button id="saveButton" style="display:inline-block;">Save</button>
+    <span id="saveError" class="error"></span>
+    
+    <div id="savedData" class="generated-fields"></div>
+
+    <script>
+        let allFields = [];
+
+        document.getElementById("addButton").addEventListener("click", function() {
+            let fieldValue = document.getElementById("AField").value;
+            let inputType = document.getElementById("inputType").value;
+            let valid = true;
+
+            document.getElementById("nameError").textContent = "";
+            document.getElementById("typeError").textContent = "";
+
+            if (!fieldValue) {
+                document.getElementById("nameError").textContent = "Name is required.";
+                valid = false;
+            }
+
+            if (inputType === "email" && !fieldValue.includes('@')) {
+                document.getElementById("typeError").textContent = "Please enter a valid email address with '@'.";
+                valid = false;
+            }
+
+            if (valid) {
+                let newDiv = document.createElement("div");
+
+                let textField = document.createElement("input");
+                textField.type = "text";
+                textField.value = fieldValue;
+                textField.disabled = true;  
+                textField.style.marginRight = "10px";
+
+                let dynamicField = document.createElement("input");
+                dynamicField.type = inputType;
+
+                newDiv.appendChild(textField);
+                newDiv.appendChild(dynamicField);
+
+                document.getElementById("fieldsContainer").appendChild(newDiv);
+
+                allFields.push({ textField: textField.value, dynamicField: dynamicField });
+            }
+        });
+
+        document.getElementById("saveButton").addEventListener("click", function() {
+            let savedDataDiv = document.getElementById("savedData");
+            let saveErrorDiv = document.getElementById("saveError");
+
+            savedDataDiv.innerHTML = "Saved Data: <br>";
+            saveErrorDiv.textContent = "";
+
+            if (allFields.length === 0) {
+                saveErrorDiv.textContent = "Please add at least one field before saving.";
+                return;
+            }
+
+            allFields.forEach(function(field, index) {
+                let dynamicFieldValue = field.dynamicField.value;
+                savedDataDiv.innerHTML += `Field ${index + 1}: <br> Name: ${field.textField} <br> Input Field: ${dynamicFieldValue} <br><br>`;
+            });
+        });
+    </script>
+</body>
+</html>
