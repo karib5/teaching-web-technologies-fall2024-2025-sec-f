@@ -13,7 +13,7 @@
 </head>
 <body>
     <div>
-        <label>Name:</label>
+        <label>Admin Name:</label>
         <input type="text" name="AField" id="AField">
         <span id="nameError" class="error"></span>
         
@@ -47,15 +47,9 @@
             document.getElementById("typeError").textContent = "";
 
             if (!fieldValue) {
-                document.getElementById("nameError").textContent = "Name is required.";
+                document.getElementById("nameError").textContent = "Admin Name is required.";
                 valid = false;
             }
-
-            if (inputType === "email" && !fieldValue.includes('@')) {
-                document.getElementById("typeError").textContent = "Please enter a valid email address with '@'.";
-                valid = false;
-            }
-            
 
             if (valid) {
                 let newDiv = document.createElement("div");
@@ -71,7 +65,6 @@
 
                 newDiv.appendChild(textField);
                 newDiv.appendChild(dynamicField);
-
                 document.getElementById("fieldsContainer").appendChild(newDiv);
 
                 allFields.push({ textField: textField.value, dynamicField: dynamicField });
@@ -92,7 +85,25 @@
 
             allFields.forEach(function(field, index) {
                 let dynamicFieldValue = field.dynamicField.value;
-                savedDataDiv.innerHTML += `Field ${index + 1}: <br> Name: ${field.textField} <br> Input Field: ${dynamicFieldValue} <br><br>`;
+                let fieldValid = true;
+
+                if (field.dynamicField.type === "email" && !dynamicFieldValue.includes('@')) {
+                    fieldValid = false;
+                    savedDataDiv.innerHTML += `Field ${index + 1}: <br> Name: ${field.textField} <br> Error: Invalid email address.<br><br>`;
+                }
+                else if (field.dynamicField.type === "text" && dynamicFieldValue.length < 1) {
+                    fieldValid = false;
+                    savedDataDiv.innerHTML += `Field ${index + 1}: <br> Name: ${field.textField} <br> Error: Please add at least one field before saving.<br><br>`;
+                }
+
+                else if (field.dynamicField.type === "password" && dynamicFieldValue.length < 5) {
+                    fieldValid = false;
+                    savedDataDiv.innerHTML += `Field ${index + 1}: <br> Name: ${field.textField} <br> Error: Password must be at least 5 characters long.<br><br>`;
+                }
+
+                if (fieldValid) {
+                    savedDataDiv.innerHTML += `Field ${index + 1}: <br> Name: ${field.textField} <br> Input Field: ${dynamicFieldValue} <br><br>`;
+                }
             });
         });
     </script>
