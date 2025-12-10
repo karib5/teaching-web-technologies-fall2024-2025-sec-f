@@ -9,11 +9,12 @@
     <?php
     $num1 = "*";
    for ( $x = 0; $x <= 3; $x++) {
-        echo"$num1";
-    
-        for ( $y = 0; $y <= 1; $y++) {
-        echo"$num1<br>";
+
+        for ( $y = 1; $y <= $x; $y++) {
+        
+            echo"$num1";
         }
+        echo"<br>";
    }
 
     ?>
